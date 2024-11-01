@@ -1,160 +1,157 @@
 'use strict';
 
-const jogador1 = {
-  ativo: document.querySelector('.jogador--0'),
-  atual: document.querySelector('#atual--0'),
-  ptsAtuais: 0,
-  total: document.querySelector('#placar--0'),
-  ptsTotais: 0,
+const DICE_IMAGE_PATH = './images/dice-';
+const VICTORY_IMAGE_PATH = './images/winner-';
+
+const imagemDado = document.getElementById('dado');
+const imagemVitoria = document.getElementById('vitoria');
+
+const jogador1 = document.getElementById('jogador--1');
+const jogador2 = document.getElementById('jogador--2');
+
+const botaoNovoJogo = document.getElementById('btn--novo-jogo');
+const botaoRolarDado = document.getElementById('btn--rolar');
+const botaoSegurarPontos = document.getElementById('btn--segurar');
+
+const display = {
+  pontosTotais: {
+    jogador1: document.getElementById('placar--1'),
+    jogador2: document.getElementById('placar--2'),
+  },
+  pontosDaRodada: {
+    jogador1: document.getElementById('atual--1'),
+    jogador2: document.getElementById('atual--2'),
+  },
 };
 
-const jogador2 = {
-  ativo: document.querySelector('.jogador--1'),
-  atual: document.querySelector('#atual--1'),
-  ptsAtuais: 0,
-  total: document.querySelector('#placar--1'),
-  ptsTotais: 0,
-};
+botaoRolarDado.addEventListener('click', rolarDado);
 
-const dados = document.querySelectorAll('.dado');
+botaoSegurarPontos.addEventListener('click', segurarPontos);
 
-// tira os dados da tela
-function removeDados() {
-  for (let i = 0; i < dados.length; i++) {
-    dados[i].classList.add('escondido');
-  }
+botaoNovoJogo.addEventListener('click', resetaJogo);
+
+function mostraImagemVitoria(num) {
+  desativaBotoes();
+  imagemVitoria.classList.add('visivel');
+  imagemVitoria.classList.remove('escondido');
+  imagemVitoria.setAttribute('src', `${VICTORY_IMAGE_PATH}${num}.png`);
 }
 
-// mostra a face do dado de acordo com o numero recebido
+function removeImagemVitoria() {
+  imagemVitoria.classList.add('escondido');
+  imagemVitoria.classList.remove('visivel');
+}
+
+function removeDadoDatela() {
+  imagemDado.classList.add('escondido');
+  imagemDado.classList.remove('visivel');
+}
+
 function mostraDado(num) {
-  if (num === 1) {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  } else if (num === 2) {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  } else if (num === 3) {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  } else if (num === 4) {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  } else if (num === 5) {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  } else {
-    removeDados();
-    dados[num - 1].classList.remove('escondido');
-  }
+  imagemDado.classList.add('visivel');
+  imagemDado.classList.remove('escondido');
+  imagemDado.setAttribute('src', `${DICE_IMAGE_PATH}${num}.png`);
 }
-// passa a vez para o outro jogador
+
 function trocaJogador() {
-  if (jogador1.ativo.classList.contains('jogador--ativo')) {
-    document.querySelector('.jogador--1').classList.add('jogador--ativo');
-    document.querySelector('.jogador--0').classList.remove('jogador--ativo');
+  if (jogador1.classList.contains('jogador--ativo')) {
+    display.pontosDaRodada.jogador1.textContent = 0;
+    ativaJogadorDois();
   } else {
-    document.querySelector('.jogador--0').classList.add('jogador--ativo');
-    document.querySelector('.jogador--1').classList.remove('jogador--ativo');
+    display.pontosDaRodada.jogador2.textContent = 0;
+    ativaJogadorUm();
   }
 }
 
-function removeBotoes() {
-  document.querySelector('.btn--rolar').classList.add('escondido');
-  document.querySelector('.btn--segurar').classList.add('escondido');
+function ativaJogadorUm() {
+  jogador1.classList.add('jogador--ativo');
+  jogador2.classList.remove('jogador--ativo');
+}
+
+function ativaJogadorDois() {
+  jogador2.classList.add('jogador--ativo');
+  jogador1.classList.remove('jogador--ativo');
+}
+
+function desativaBotoes() {
+  botaoSegurarPontos.classList.add('escondido');
+  botaoRolarDado.classList.add('escondido');
 }
 
 function ativaBotoes() {
-  document.querySelector('.btn--rolar').classList.remove('escondido');
-  document.querySelector('.btn--segurar').classList.remove('escondido');
+  botaoSegurarPontos.classList.remove('escondido');
+  botaoRolarDado.classList.remove('escondido');
 }
 
-// zera os pontos totais do jogador selecionado
-function zeraPontosTotais(jogador) {
-  jogador.ptsAtuais = 0;
-  jogador.ptsTotais = 0;
-  jogador.atual.textContent = jogador.ptsAtuais;
-  jogador.total.textContent = jogador.ptsTotais;
-}
-// salva os pontos da rodada do jogador nos seus pontos totais
-function salvaPontos(jogador) {
-  jogador.ptsTotais += jogador.ptsAtuais;
-  jogador.total.textContent = jogador.ptsTotais;
-  jogador.ptsAtuais = 0;
-  jogador.atual.textContent = jogador.ptsAtuais;
+function resetaPontos() {
+  display.pontosDaRodada.jogador1.textContent = 0;
+  display.pontosDaRodada.jogador2.textContent = 0;
+  display.pontosTotais.jogador1.textContent = 0;
+  display.pontosTotais.jogador2.textContent = 0;
 }
 
-// zera tudo e recomeça o jogo
 function resetaJogo() {
-  zeraPontosTotais(jogador1);
-  zeraPontosTotais(jogador2);
-  document.querySelector('.jogador--0').classList.add('jogador--ativo');
-  document.querySelector('.jogador--1').classList.remove('jogador--ativo');
+  ativaJogadorUm();
   ativaBotoes();
-  removeDados();
-  document.querySelector('.vit-1').classList.add('escondido');
-  document.querySelector('.vit-2').classList.add('escondido');
+  removeImagemVitoria();
+  removeDadoDatela();
+  resetaPontos();
+}
+function gerarNumeroAleatorio(numMax) {
+  return Math.trunc(Math.random() * numMax) + 1;
 }
 
-// adiciona pontos do giro ao jogador selecionado
-function adicionaPontosAtuais(jogador, numPontos) {
-  jogador.ptsAtuais += numPontos;
-  jogador.atual.textContent = jogador.ptsAtuais;
-}
-
-// zera os pontos da rodada do jogador selecionado
-function zeraPontosAtuais(jogador) {
-  jogador.ptsAtuais = 0;
-  jogador.atual.textContent = jogador.ptsAtuais;
-}
-
-// rola o dado e se o resultado for diferente de zero adiciona aos pontos da rodada do jogador selecionado, caso contrario zera os pontos da rodada e passa a vez para o outro jogador
-document.querySelector('.btn--rolar').addEventListener('click', function () {
-  const num = Math.trunc(Math.random() * 6) + 1;
-  if (num === 1) {
-    mostraDado(num);
-    if (jogador1.ativo.classList.contains('jogador--ativo')) {
-      trocaJogador();
-      zeraPontosAtuais(jogador1);
-    } else {
-      trocaJogador();
-      zeraPontosAtuais(jogador2);
-    }
+function rolarDado() {
+  const numDado = gerarNumeroAleatorio(6);
+  mostraDado(numDado);
+  if (numDado === 1) {
+    trocaJogador();
   } else {
-    mostraDado(num);
-    if (jogador1.ativo.classList.contains('jogador--ativo')) {
-      adicionaPontosAtuais(jogador1, num);
+    if (jogador1.classList.contains('jogador--ativo')) {
+      const pontosAtuais = Number(display.pontosDaRodada.jogador1.textContent);
+      display.pontosDaRodada.jogador1.textContent = pontosAtuais + numDado;
     } else {
-      adicionaPontosAtuais(jogador2, num);
+      const pontosAtuais = Number(display.pontosDaRodada.jogador2.textContent);
+      display.pontosDaRodada.jogador2.textContent = pontosAtuais + numDado;
     }
   }
-});
+}
 
-// guarda os pontos da rodada nos pontos totais e checa se esses passam de 100, se sim o jogador vence, caso contrario a vez vaz para o outro jogador
-document.querySelector('.btn--segurar').addEventListener('click', function () {
-  if (jogador1.ativo.classList.contains('jogador--ativo')) {
-    salvaPontos(jogador1);
-    if (jogador1.ptsTotais >= 100) {
-      removeDados();
-      document.querySelector('.vit-1').classList.remove('escondido');
-      removeBotoes();
+function segurarPontos() {
+  removeDadoDatela();
+  if (jogador1.classList.contains('jogador--ativo')) {
+    const pontosTotaisAtuais = Number(
+      display.pontosTotais.jogador1.textContent
+    );
+    const pontosDaRodadaAtual = Number(
+      display.pontosDaRodada.jogador1.textContent
+    );
+    display.pontosTotais.jogador1.textContent =
+      pontosDaRodadaAtual + pontosTotaisAtuais;
+
+    display.pontosDaRodada.jogador1.textContent = 0;
+
+    if (pontosDaRodadaAtual + pontosTotaisAtuais >= 100) {
+      mostraImagemVitoria(1);
     } else {
       trocaJogador();
     }
   } else {
-    salvaPontos(jogador2);
-    if (jogador2.ptsTotais >= 100) {
-      removeDados();
-      document.querySelector('.vit-2').classList.remove('escondido');
-      removeBotoes();
+    const pontosTotaisAtuais = Number(
+      display.pontosTotais.jogador2.textContent
+    );
+    const pontosDaRodadaAtual = Number(
+      display.pontosDaRodada.jogador2.textContent
+    );
+    display.pontosTotais.jogador2.textContent =
+      pontosDaRodadaAtual + pontosTotaisAtuais;
+
+    display.pontosDaRodada.jogador2.textContent = 0;
+
+    if (pontosDaRodadaAtual + pontosTotaisAtuais >= 100) {
+      mostraImagemVitoria(2);
     } else {
       trocaJogador();
     }
   }
-});
-
-// inicia um novo jogo
-document
-  .querySelector('.btn--novo-jogo')
-  .addEventListener('click', function () {
-    resetaJogo();
-  });
+}

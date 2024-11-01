@@ -129,13 +129,13 @@ main {
   margin-right: 0.7rem;
 }
 
-.btn--novo-jogo {
+#btn--novo-jogo {
   top: 4rem;
 }
-.btn--rolar {
+#btn--rolar {
   top: 39.3rem;
 }
-.btn--segurar {
+#btn--segurar {
   top: 46.1rem;
 }
 
@@ -148,7 +148,7 @@ main {
   outline: none;
 }
 
-.dado {
+#dado {
   position: absolute;
   left: 50%;
   top: 16.5rem;
@@ -157,23 +157,18 @@ main {
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
 }
 
-.player--winner {
-  background-color: #2f2f2f;
-}
-
-.player--winner .name {
-  font-weight: 700;
-  color: #c7365f;
-}
-
-.escondido {
-  display: none;
-}
-.vitoria {
+#vitoria {
   position: absolute;
   left: 50%;
   top: 16.5rem;
   transform: translateX(-50%);
   height: 20rem;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+}
+
+.visivel {
+  display: inline;
+}
+.escondido {
+  display: none;
 }

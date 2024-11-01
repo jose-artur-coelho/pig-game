@@ -5,71 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="style.css" />
-    <title>Dadinho</title>
+    <title>Pig game</title>
   </head>
   <body>
     <main>
-      <section class="jogador jogador--0 jogador--ativo">
-        <h2 class="nome" id="nome--0">Jogador 1</h2>
-        <p class="pontuador" id="placar--0">0</p>
-        <div class="atual">
-          <p class="atual-label">Atual</p>
-          <p class="pontuacao-atual" id="atual--0">0</p>
-        </div>
-      </section>
-      <section class="jogador jogador--1">
-        <h2 class="nome" id="nome--1">Jogador 2</h2>
+      <section class="jogador jogador--ativo" id="jogador--1">
+        <h2 class="nome" id="nome--1">Jogador 1</h2>
         <p class="pontuador" id="placar--1">0</p>
         <div class="atual">
           <p class="atual-label">Atual</p>
           <p class="pontuacao-atual" id="atual--1">0</p>
         </div>
       </section>
+      <section class="jogador" id="jogador--2">
+        <h2 class="nome" id="nome--2">Jogador 2</h2>
+        <p class="pontuador" id="placar--2">0</p>
+        <div class="atual">
+          <p class="atual-label">Atual</p>
+          <p class="pontuacao-atual" id="atual--2">0</p>
+        </div>
+      </section>
 
       <img
-        src="/images/dice-1.png"
-        alt="jogando dado"
-        class="dado um escondido"
-      />
-      <img
-        src="/images/dice-2.png"
-        alt="jogando dado"
-        class="dado dois escondido"
-      />
-      <img
-        src="/images/dice-3.png"
-        alt="jogando dado"
-        class="dado tres escondido"
-      />
-      <img
-        src="/images/dice-4.png"
-        alt="jogando dado"
-        class="dado quatro escondido"
-      />
-      <img
-        src="/images/dice-5.png"
-        alt="jogando dado"
-        class="dado cinco escondido"
-      />
-      <img
-        src="/images/dice-6.png"
-        alt="jogando dado"
-        class="dado seis escondido"
-      />
-      <img
-        src="/images/winner-1.png"
-        alt="vitoria jogador 1"
-        class="vitoria vit-1 escondido"
-      />
-      <img
-        src="/images/winner-2.png"
-        alt="vitoria jogador 1"
-        class="vitoria vit-2 escondido"
+        src=""
+        alt="dado com valores de 1 a 6."
+        id="dado"
+        class="escondido"
       />
 
-      <button class="btn btn--novo-jogo">🔄 Novo jogo</button>
-      <button class="btn btn--rolar">🎲 Rolar dado</button>
-      <button class="btn btn--segurar">📥 Segurar</button>
+      <img src="" alt="vitoria jogador" id="vitoria" class="escondido" />
+
+      <button class="btn" id="btn--novo-jogo">🔄 Novo jogo</button>
+      <button class="btn" id="btn--rolar">🎲 Rolar dado</button>
+      <button class="btn" id="btn--segurar">📥 Segurar</button>
     </main>
     <script src="script.js"></script>
   </body>
